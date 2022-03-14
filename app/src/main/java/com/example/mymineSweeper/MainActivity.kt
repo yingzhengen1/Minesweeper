@@ -1,5 +1,6 @@
 package com.example.mymineSweeper
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.SystemClock
@@ -16,7 +17,8 @@ interface OnCellClickListener {
     fun cellClick(cell: Cell?)
 }
 
-class MainActivity : AppCompatActivity(), OnCellClickListener {
+class MainActivity : AppCompatActivity(), OnCellClickListener
+{
     private var mineGridRecyclerAdapter: MineGridRecyclerAdapter? = null
     private var grid: RecyclerView? = null
     private var face: TextView? = null
@@ -26,9 +28,10 @@ class MainActivity : AppCompatActivity(), OnCellClickListener {
     private var secondsElapsed = 0
     private var meter: Chronometer? = null
     private var clocking = false
-    override fun onCreate(savedInstanceState: Bundle?)
+    @SuppressLint("SetTextI18n") override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+        //hide the top bar
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide();
         setContentView(R.layout.activity_main)
@@ -41,44 +44,49 @@ class MainActivity : AppCompatActivity(), OnCellClickListener {
         flagsLeft = findViewById(R.id.flagsleft_id)
         meter = findViewById<Chronometer>(R.id.chronometer_id)
 
+        //set the game
         mineSweeperGame = MineSweeperGame(GRID_SIZE, BOMB_COUNT)
         mineGridRecyclerAdapter = MineGridRecyclerAdapter(mineSweeperGame!!.mineGrid.getCells(), this)
         grid?.adapter = mineGridRecyclerAdapter
 
         // Create the emoji face
+        // Click on the face will reset the game
         face = findViewById(R.id.face_id)
         face?.setOnClickListener {
-            face?.text = "\uD83D\uDE00"
+            face?.text = "\uD83D\uDE00"//smile face
+
+            // RESET THE GAME
             mineSweeperGame = MineSweeperGame(GRID_SIZE, BOMB_COUNT)
             mineGridRecyclerAdapter!!.setCells(mineSweeperGame!!.mineGrid.getCells())
 
-
+            // Reset the chronometer and Start tracking time
             meter?.base = SystemClock.elapsedRealtime()
             meter?.start()
-
-
-
             secondsElapsed = 0
         }
 
+        // Start tracking time on the first initialization
         meter?.start()
         clocking = true
+
+        // Set the flag
         flag = findViewById(R.id.flag_id)
         flag?.setOnClickListener {
             mineSweeperGame!!.toggleMode()
             if (mineSweeperGame!!.isFlagMode) {
                 val border = GradientDrawable()
-                border.setColor(-0x1)
-                border.setStroke(1, -0x1000000)
+                border.setColor(-0x4)
+                border.setStroke(2, -0x1000000)
                 flag!!.background = border
             }
             else
             {
                 val border = GradientDrawable()
-                border.setColor(-0x1)
+                border.setColor(-0x4)
                 flag!!.background = border
             }
         }
+        
     }
 
     override fun cellClick(cell: Cell?)
@@ -108,7 +116,12 @@ class MainActivity : AppCompatActivity(), OnCellClickListener {
 
         if (mineSweeperGame!!.isGameWon)
         {
-
+            if(clocking)
+            {
+                meter?.stop()
+                clocking = false
+            }
+            face!!.text = "\uD83D\uDE01"
             Toast.makeText(applicationContext, "Game Won", Toast.LENGTH_SHORT).show()
             mineSweeperGame!!.mineGrid.revealAllBombs()
         }

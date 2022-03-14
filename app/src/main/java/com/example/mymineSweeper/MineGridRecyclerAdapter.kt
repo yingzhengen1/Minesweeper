@@ -9,7 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymineSweeper.MineGridRecyclerAdapter.MineTileViewHolder
 
-class MineGridRecyclerAdapter(private var cells: List<Cell>, private val listener: OnCellClickListener) : RecyclerView.Adapter<MineTileViewHolder>() {
+class MineGridRecyclerAdapter(private var cells: List<Cell>, private val listener: OnCellClickListener) : RecyclerView.Adapter<MineTileViewHolder>()
+{
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MineTileViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_cell, parent, false)
         return MineTileViewHolder(itemView)

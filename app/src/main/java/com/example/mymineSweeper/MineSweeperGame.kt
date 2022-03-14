@@ -1,6 +1,7 @@
 package com.example.mymineSweeper
 
-class MineSweeperGame(size: Int, val numberBombs: Int) {
+class MineSweeperGame(size: Int, val numberBombs: Int)
+{
     val mineGrid: MineGrid = MineGrid(size)
     var isGameOver = false
         private set

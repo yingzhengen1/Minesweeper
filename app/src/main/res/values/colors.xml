@@ -12,6 +12,7 @@
     <color name="maroon">#800000</color>
     <color name="violet">#6200EE</color>
     <color name="purple">#3700B3</color>
+    <color name="light_grey">#E0E0E0</color>
     <color name="colorAccent">#03DAC5</color>
 
 </resources>
