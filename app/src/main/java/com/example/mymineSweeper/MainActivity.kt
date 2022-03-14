@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
+interface OnCellClickListener {
+    fun cellClick(cell: Cell?)
+}
+
 class MainActivity : AppCompatActivity(), OnCellClickListener {
     private var mineGridRecyclerAdapter: MineGridRecyclerAdapter? = null
     private var grid: RecyclerView? = null

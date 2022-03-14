@@ -2,6 +2,19 @@ package com.example.mymineSweeper
 
 import java.util.*
 
+class Cell(val value: Int)
+{
+    var isRevealed = false
+    var isFlagged = false
+
+    companion object
+    {
+        const val BOMB = -1
+        const val BLANK = 0
+    }
+}
+
+
 class MineGrid(private val size: Int)
 {
     private val cells: MutableList<Cell>

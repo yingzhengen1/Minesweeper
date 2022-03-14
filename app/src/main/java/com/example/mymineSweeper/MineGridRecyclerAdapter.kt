@@ -24,7 +24,7 @@ class MineGridRecyclerAdapter(private var cells: List<Cell>, private val listene
         return cells.size
     }
 
-    fun setCells(cells: List<Cell>) {
+    @SuppressLint("NotifyDataSetChanged") fun setCells(cells: List<Cell>) {
         this.cells = cells
         notifyDataSetChanged()
     }
